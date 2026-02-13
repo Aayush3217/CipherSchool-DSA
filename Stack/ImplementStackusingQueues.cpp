@@ -1,7 +1,7 @@
 // Link : https://leetcode.com/problems/implement-stack-using-queues/
 
 class MyStack {
-    queue<int> q;
+    queue<int> q; 
 public:
     MyStack() {
         
