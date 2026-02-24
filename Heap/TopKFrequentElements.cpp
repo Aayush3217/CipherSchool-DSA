@@ -27,3 +27,44 @@ public:
         return ans;
     }
 };
+
+
+
+class Solution {
+public:
+    struct lambda {
+        bool operator()(pair<int,string>& a, pair<int,string>& b) {
+            if(a.first == b.first)
+                return a.second < b.second;  // lex smaller = lower priority
+            return a.first > b.first;        // smaller freq = higher priority
+        }
+    };
+
+    vector<string> topKFrequent(vector<string>& words, int k) {
+        unordered_map<string, int> mp;
+        for(auto& w : words){
+            mp[w]++;
+        }
+
+        priority_queue<
+            pair<int,string>,
+            vector<pair<int,string>>,
+            lambda
+        > pq;
+
+
+        for(auto& it : mp){
+            pq.push({it.second, it.first});
+
+            if(pq.size()>k) pq.pop();
+        }
+
+        vector<string> res;
+        while(!pq.empty()){
+            res.push_back(pq.top().second);
+            pq.pop();
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
